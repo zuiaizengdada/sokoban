@@ -10,6 +10,7 @@
     "test": "vitest"
   },
   "dependencies": {
+    "happy-dom": "^14.7.1",
     "pinia": "^2.1.7",
     "vue": "^3.4.21"
   },

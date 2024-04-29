@@ -1,26 +1,12 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import keepImg from '../../assets/keeper.png'
 import { usePlayerStore } from '../../store/player'
 import { useMove } from './player'
+import { usePosition } from '../../composables/usePosition'
 
 useMove()
-
-function usePosition() {
-  const { player } = usePlayerStore()
-
-  const STEP = 32
-  const position = computed(() => ({
-    top: player.y * STEP + 'px',
-    left: player.x * STEP + 'px'
-  }))
-
-  return {
-    position
-  }
-}
-
-const { position } = usePosition()
+const { player } = usePlayerStore()
+const { position } = usePosition(player)
 </script>
 
 <template>

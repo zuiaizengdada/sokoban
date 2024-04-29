@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      happy-dom:
-        specifier: ^14.7.1
-        version: 14.7.1
       pinia:
         specifier: ^2.1.7
         version: 2.1.7(typescript@5.4.5)(vue@3.4.25(typescript@5.4.5))
@@ -24,6 +21,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
+      happy-dom:
+        specifier: ^14.7.1
+        version: 14.7.1
       postcss:
         specifier: ^8.4.38
         version: 8.4.38

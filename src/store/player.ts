@@ -15,60 +15,37 @@ export const usePlayerStore = defineStore('player', () => {
     y: 3
   })
 
-  function movePlayerToLeft() {
-    if (isWall({ x: player.x - 1, y: player.y })) return
+  function _move(dx: number, dy: number) {
+    const nextPosition = { x: player.x + dx, y: player.y + dy }
 
-    const { findCetgo } = useCargoStore()
+    if (isWall(nextPosition)) return
 
-    const cetgo = findCetgo({ x: player.x - 1, y: player.y })
+    const { findCargo, moveCargo } = useCargoStore()
+    const cargo = findCargo(nextPosition)
 
-    if (cetgo) {
-      cetgo.x -= 1
+    if (cargo) {
+      const isMoveCargo = moveCargo(cargo, dx, dy)
+      if (!isMoveCargo) return
     }
 
-    player.x -= 1
+    player.x += dx
+    player.y += dy
+  }
+
+  function movePlayerToLeft() {
+    _move(-1, 0)
   }
 
   function movePlayerToRight() {
-    if (isWall({ x: player.x + 1, y: player.y })) return
-
-    const { findCetgo } = useCargoStore()
-
-    const cetgo = findCetgo({ x: player.x + 1, y: player.y })
-
-    if (cetgo) {
-      cetgo.x += 1
-    }
-
-    player.x += 1
+    _move(1, 0)
   }
 
   function movePlayerToTop() {
-    if (isWall({ x: player.x, y: player.y - 1 })) return
-
-    const { findCetgo } = useCargoStore()
-
-    const cetgo = findCetgo({ x: player.x, y: player.y - 1 })
-
-    if (cetgo) {
-      cetgo.y -= 1
-    }
-
-    player.y -= 1
+    _move(0, -1)
   }
 
   function movePlayerToBottom() {
-    if (isWall({ x: player.x, y: player.y + 1 })) return
-
-    const { findCetgo } = useCargoStore()
-
-    const cetgo = findCetgo({ x: player.x, y: player.y + 1 })
-
-    if (cetgo) {
-      cetgo.y += 1
-    }
-
-    player.y += 1
+    _move(0, 1)
   }
 
   function setupPlayer(setupPlayerer: Player) {

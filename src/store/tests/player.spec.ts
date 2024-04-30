@@ -116,11 +116,12 @@ describe('player', () => {
       const { setupMap } = useMapStore()
 
       setupMap([
-        [1, 1, 1, 1, 1],
-        [1, 2, 2, 2, 1],
-        [1, 2, 2, 2, 1],
-        [1, 2, 2, 2, 1],
-        [1, 1, 1, 1, 1]
+        [1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1]
       ])
     })
 
@@ -152,30 +153,79 @@ describe('player', () => {
 
     it('should push a cargo to top', () => {
       const { addCargo, createCargo } = useCargoStore()
-      const cargo = createCargo({ x: 2, y: 3 })
+      const cargo = createCargo({ x: 1, y: 2 })
       addCargo(cargo)
 
       const { player, movePlayerToTop, setupPlayer } = usePlayerStore()
-      setupPlayer({ x: 2, y: 4 })
+      setupPlayer({ x: 1, y: 3 })
       movePlayerToTop()
 
-      expect(cargo.y).toBe(2)
-      expect(player.y).toBe(3)
+      expect(cargo.y).toBe(1)
+      expect(player.y).toBe(2)
     })
 
     it('should push a cargo to bottom', () => {
       const { addCargo, createCargo } = useCargoStore()
-      const cargo = createCargo({ x: 2, y: 3 })
+      const cargo = createCargo({ x: 1, y: 2 })
       addCargo(cargo)
 
       const { player, movePlayerToBottom, setupPlayer } = usePlayerStore()
-      setupPlayer({ x: 2, y: 2 })
+      setupPlayer({ x: 1, y: 1 })
       movePlayerToBottom()
 
-      expect(cargo.y).toBe(4)
-      expect(player.y).toBe(3)
+      expect(cargo.y).toBe(3)
+      expect(player.y).toBe(2)
+    })
+
+    it('fix', () => {
+      let map = [
+        [1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 2, 2, 2, 2, 2, 2, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1]
+      ]
+
+      const { setupMap } = useMapStore()
+      setupMap(map)
+
+      const { player, setupPlayer, movePlayerToRight } = usePlayerStore()
+
+      setupPlayer({ x: 4, y: 1 })
+
+      movePlayerToRight()
+
+      expect(player.x).toBe(5)
+    })
+
+    it('should not push a cargo when cargo hits', () => {
+      const { addCargo, createCargo } = useCargoStore()
+      const cargo = createCargo({ x: 1, y: 1 })
+      addCargo(cargo)
+
+      const { player, movePlayerToLeft, setupPlayer } = usePlayerStore()
+      setupPlayer({ x: 2, y: 1 })
+      movePlayerToLeft()
+
+      expect(cargo.x).toBe(1)
+      expect(player.x).toBe(2)
+    })
+
+    it('should not push a cargo when cargo hits other cargo', () => {
+      const { addCargo, createCargo } = useCargoStore()
+      const cargo1 = createCargo({ x: 2, y: 1 })
+      addCargo(cargo1)
+      const cargo2 = createCargo({ x: 3, y: 1 })
+      addCargo(cargo2)
+
+      const { player, movePlayerToLeft, setupPlayer } = usePlayerStore()
+      setupPlayer({ x: 1, y: 1 })
+      movePlayerToLeft()
+
+      expect(cargo1.x).toBe(2)
+      expect(cargo2.x).toBe(3)
+      expect(player.x).toBe(1)
     })
   })
-
-  // describe('cargo ')
 })

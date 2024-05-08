@@ -1,8 +1,8 @@
-import { it, expect, describe, beforeEach } from 'vitest'
-import { usePlayerStore } from '../player'
 import { createPinia, setActivePinia } from 'pinia'
-import { useMapStore } from '../map'
+import { beforeEach, describe, expect, it } from 'vitest'
 import { useCargoStore } from '../cargo'
+import { useMapStore } from '../map'
+import { usePlayerStore } from '../player'
 
 describe('player', () => {
   beforeEach(() => {
@@ -127,11 +127,12 @@ describe('player', () => {
 
     it('should push a cargo to left', () => {
       const { addCargo, createCargo } = useCargoStore()
-      const cargo = createCargo({ x: 2, y: 3 })
+      const cargo = createCargo({ x: 2, y: 1 })
       addCargo(cargo)
 
       const { player, movePlayerToLeft, setupPlayer } = usePlayerStore()
-      setupPlayer({ x: 3, y: 3 })
+      setupPlayer({ x: 3, y: 1 })
+
       movePlayerToLeft()
 
       expect(cargo.x).toBe(1)

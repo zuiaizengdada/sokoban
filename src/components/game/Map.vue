@@ -9,7 +9,7 @@ const { map } = useMapStore()
 <template>
   <div class="map w-screen">
     <div v-for="(row, i) in map" class="flex">
-      <div v-for="(col, j) in map[i]" >
+      <div v-for="(col, j) in map[i]">
         <template v-if="map[i][j] === MapTile.WALL">
           <img :src="wallImg" />
         </template>
@@ -21,5 +21,3 @@ const { map } = useMapStore()
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped></style>

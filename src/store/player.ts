@@ -25,6 +25,7 @@ export const usePlayerStore = defineStore('player', () => {
 
     if (cargo) {
       const isMoveCargo = moveCargo(cargo, dx, dy)
+
       if (!isMoveCargo) return
     }
 
